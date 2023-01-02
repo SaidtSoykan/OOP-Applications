@@ -1,0 +1,46 @@
+- init:
+    run: rm -f valgrind_test
+    blocker: true
+
+- build:
+    run: g++ -Wall -Werror main.cpp pokemon.cpp pokemon.h -o valgrind_test -lm
+    exit: 0
+    points: 0
+    blocker: true
+
+- case1:
+    run: valgrind --leak-check=full ./valgrind_test enemyNames_test.txt pokemonNames_test.txt
+    script:
+        - expect: '.*'
+        - send: "Ash"
+        - expect: '.*'
+        - send: "2"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "2"
+        - expect: '.*'
+        - send: "1"
+        - expect: '.*'
+        - send: "3"
+        - expect: '.*'
+        - send: "4"
+        - expect: '.*'
+        - send: "5"
+        - expect: '.*'
+        - send: "6"
+        - expect: '.*'
+        - send: "7"
+        - expect: '(.*)All heap blocks were freed -- no leaks are possible(.*)'
+    exit: 0
+    points: 100
